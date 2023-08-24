@@ -1,10 +1,30 @@
 import { useState } from "react";
 
-function InvestmentForm() {
-  const [currentSavings, setCurrentSavings] = useState('')
-  const [yearlyContribution, setYearlyContribution] = useState('')
-  const [expectedInterest, setExpectedInterest] = useState('')
-  const [investmentDuration, setInvestmentDuration] = useState('')
+function InvestmentForm({ calculationHandler }) {
+  /*
+   * Component to fully manage the submission form
+   *
+   * Props:
+   *    calculationHandler: function from parent component
+   *                        to be called when the form has
+   *                        sucessfully processed data.
+   *
+   *                        This is because the form data
+   *                        will be used to generate the table
+   *                        entries, which are not children
+   *                        to this component, so we pass state
+   *                        up and leave the calculation to the
+   *                        parent (right now, <App>)
+   */
+  // const [currentSavings, setCurrentSavings] = useState('')
+  // const [yearlyContribution, setYearlyContribution] = useState('')
+  // const [expectedInterest, setExpectedInterest] = useState('')
+  // const [investmentDuration, setInvestmentDuration] = useState('')
+
+  const [currentSavings, setCurrentSavings] = useState('0')
+  const [yearlyContribution, setYearlyContribution] = useState('10000')
+  const [expectedInterest, setExpectedInterest] = useState('10')
+  const [investmentDuration, setInvestmentDuration] = useState('100')
 
 
   function onSubmitHandler(event) {
@@ -29,6 +49,8 @@ function InvestmentForm() {
     setYearlyContribution('')
     setExpectedInterest('')
     setInvestmentDuration('')
+
+    calculationHandler(formData)
 
     console.groupEnd()
   }
