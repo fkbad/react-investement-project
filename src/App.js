@@ -2,8 +2,10 @@ import logo from './assets/investment-calculator-logo.png';
 
 import Table from './components/table/Table'
 import InvestmentForm from './components/form/InvestmentForm'
+import { useState } from 'react';
 function App() {
 
+  const [tableData, setTableData] = useState([])
 
 
   const calculateHandler = (userInput) => {
@@ -18,20 +20,29 @@ function App() {
     const expectedReturn = +userInput['expectedInterest'] / 100;
     const duration = +userInput['investmentDuration'];
 
+    // variable to keep track of the invested capital
+    // this is the amount of money put in
+    let investedCapital = currentSavings
+    let totalInterest = 0
+
     // The below code calculates yearly results (total savings, interest etc)
     for (let i = 0; i < duration; i++) {
       const yearlyInterest = currentSavings * expectedReturn;
       currentSavings += yearlyInterest + yearlyContribution;
+
+      investedCapital += yearlyContribution;
+
+      totalInterest += yearlyInterest;
+
       yearlyData.push({
-        // feel free to change the shape of the data pushed to the array!
         year: i + 1,
         yearlyInterest: yearlyInterest,
-        savingsEndOfYear: currentSavings,
-        yearlyContribution: yearlyContribution,
+        totalSavings: currentSavings,
+        investedCapital: investedCapital,
+        totalInterest: totalInterest,
       });
     }
-
-    // do something with yearlyData ...
+    setTableData(yearlyData)
   };
 
   return (
@@ -45,7 +56,7 @@ function App() {
       {/* Todo: Show below table conditionally (only once result data is available) */}
       {/* Show fallback text if no data is available */}
       <InvestmentForm calculationHandler={calculateHandler} />
-      <Table />
+      <Table items={tableData} />
     </div>
   );
 }
