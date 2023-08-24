@@ -10,8 +10,8 @@ function App() {
     const yearlyData = []; // per-year results
 
     // unary + turns things into a number
-    let currentSavings = +userInput['current-savings']; // feel free to change the shape of this input object!
-    const yearlyContribution = +userInput['yearly-contribution']; // as mentioned: feel free to change the shape...
+    let currentSavings = +userInput['currentSavings']; // feel free to change the shape of this input object!
+    const yearlyContribution = +userInput['yearlyContribution']; // as mentioned: feel free to change the shape...
     const expectedReturn = +userInput['expected-return'] / 100;
     const duration = +userInput['duration'];
 
